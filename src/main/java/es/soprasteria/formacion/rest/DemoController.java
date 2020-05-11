@@ -1,7 +1,7 @@
 package es.soprasteria.formacion.rest;
 
-import es.soprasteria.formacion.dao.PersonRepository;
-import es.soprasteria.formacion.entity.PersonEntity;
+import es.soprasteria.formacion.dto.PersonDto;
+import es.soprasteria.formacion.service.PersonService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
   @Autowired
-  private PersonRepository personRepository;
+  private PersonService personService;
 
   @GetMapping("/hello/{name}")
   public String hello(@PathVariable(name="name") String name) {
@@ -20,12 +20,12 @@ public class DemoController {
   }
 
   @GetMapping("/list/{name}")
-  public PersonEntity findPerson(@PathVariable(name="name") String name) {
-    return personRepository.findById(name).get();
+  public PersonDto findPerson(@PathVariable(name="name") String name) {
+    return personService.getByName(name);
   }
 
   @GetMapping("/list")
-  public List<PersonEntity> listPersons() {
-    return personRepository.findAll();
+  public List<PersonDto> listPersons() {
+    return personService.getAllPersons();
   }
 }
