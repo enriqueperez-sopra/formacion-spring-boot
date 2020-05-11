@@ -8,4 +8,6 @@ public interface PersonService {
   PersonDto getByName(String name);
 
   List<PersonDto> getAllPersons();
+
+  PersonDto createPerson(PersonDto newPerson);
 }

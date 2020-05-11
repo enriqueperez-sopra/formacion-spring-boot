@@ -29,4 +29,16 @@ public class PersonServiceImpl implements PersonService {
         .collect(Collectors.toList());
     return personDtos;
   }
+
+  @Override
+  public PersonDto createPerson(PersonDto newPerson) {
+    PersonEntity personEntity = new PersonEntity();
+    personEntity.setAge(newPerson.getAge());
+    personEntity.setName(newPerson.getName());
+
+    PersonEntity persistedEntity = personRepository.save(personEntity);
+
+    PersonDto personDto = new PersonDto(persistedEntity.getName(), persistedEntity.getAge());
+    return personDto;
+  }
 }

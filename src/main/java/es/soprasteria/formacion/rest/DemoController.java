@@ -8,11 +8,16 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1/demo")
 public class DemoController {
 
   @Autowired
@@ -33,7 +38,15 @@ public class DemoController {
     return personService.getByName(name);
   }
 
-  @GetMapping("/list")
+  @PostMapping("/person")
+  public PersonDto createPerson(@RequestBody PersonDto newPerson) {
+    return personService.createPerson(newPerson);
+  }
+
+  @GetMapping(value = "/list", produces = {
+      MediaType.APPLICATION_JSON_VALUE,
+      MediaType.APPLICATION_XML_VALUE
+  })
   public List<PersonDto> listPersons() {
     return personService.getAllPersons();
   }
